@@ -1,0 +1,49 @@
+{% extends "manager/layout.html" %}
+
+{% block title %}
+Manager Dashboard
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Manager Dashboard</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total Users</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ total_users }}</h5>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Pending Approvals</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ pending_approvals }}</h5>
+                    <!-- Link for managing approvals should redirect to a general page, not a specific parcel -->
+                    <a href="{{ url_for('approve_parcels') }}" class="btn btn-dark">Manage Approvals</a>
+                </div>
+            </div>
+        </div> 
+        
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Reports</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ reports_count }}</h5>
+                </div>
+            </div>
+        </div>
+        <h2>Pending Employee Approvals</h2>
+        <ul class="list-group">
+            {% for employee in unapproved_employees %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ employee.first_name }} {{ employee.last_name }} ({{ employee.email }})
+                    <button onclick="location.href='{{ url_for('approve_employee', employee_id=employee.id) }}'" class="btn btn-success">Approve</button>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

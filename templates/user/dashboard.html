@@ -1,0 +1,73 @@
+{% extends "user/layout.html" %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>User Dashboard</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4>Your Profile</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>First Name:</strong> {{ user.fname }}</p>
+                    <p><strong>Last Name:</strong> {{ user.lname }}</p>
+                    <p><strong>Username:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <a href="/user/update-profile" class="btn btn-primary">Update Profile</a>
+                    <a href="/user/change-password" class="btn btn-warning">Change Password</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Your Parcels</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Delivery Type</th>
+                        <th>Sender Address</th>
+                        <th>Receiver Address</th>
+                        <th>Weight (kg)</th>
+                        <th>Total Due ($)</th>
+                        <th>Status</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for parcel in user.parcels %}
+                    <tr>
+                        <td>{{ parcel.description }}</td>
+                        <td>{{ parcel.delivery_type }}</td>
+                        <td>{{ parcel.sender_address }}</td>
+                        <td>{{ parcel.receiver_address }}</td>
+                        <td>{{ parcel.weight }}</td>
+                        <td>{{ "%.2f"|format(parcel.total_due) }} tk</td>
+                        <td>{{ parcel.status }}</td>
+
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="8">No parcels found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/user/place_parcel" class="btn btn-success">Place New Order</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

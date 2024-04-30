@@ -1,0 +1,22 @@
+{% extends 'employee/layout.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Approve Delivery</h2>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Parcel Details</h4>
+            <p><strong>Description:</strong> {{ parcel.description }}</p>
+            <p><strong>Sender Address:</strong> {{ parcel.sender_address }}</p>
+            <p><strong>Receiver Address:</strong> {{ parcel.receiver_address }}</p>
+            <p><strong>Weight:</strong> {{ parcel.weight }} kg</p>
+            <p><strong>Total Due:</strong> ${{ parcel.total_due }}</p>
+
+            <form action="{{ url_for('approve_delivery', parcel_id=parcel.id) }}" method="post">
+                <button type="submit" class="btn btn-success">Confirm Approval</button>
+                <a href="{{ url_for('employee_dashboard') }}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

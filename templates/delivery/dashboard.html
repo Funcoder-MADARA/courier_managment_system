@@ -1,0 +1,49 @@
+{% extends "delivery/layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Delivery Dashboard</h2>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Sender Address</th>
+                    <th>Receiver Address</th>
+                    <th>Total Due</th>
+                    <th>Current Status</th>
+                    <th>Update Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for parcel in parcels %}
+                <tr>
+                    <td>{{ parcel.id }}</td>
+                    <td>{{ parcel.description }}</td>
+                    <td>{{ parcel.sender_address }}</td>
+                    <td>{{ parcel.receiver_address }}</td>
+                    <td>{{ parcel.total_due }}</td>
+                    <td>{{ parcel.status }}</td>
+                    <td>
+                        {% if parcel.status != "Delivered" %}
+                        <form action="{{ url_for('update_delivery_status', parcel_id=parcel.id) }}" method="post">
+                            <select name="new_status" class="form-control">
+                                <option value="received" {% if parcel.status == "received" %}selected{% endif %}>Received</option>
+                                <option value="out for delivery" {% if parcel.status == "out for delivery" %}selected{% endif %}>Out for Delivery</option>
+                                <option value="delivered">Delivered</option>
+                            </select>
+                            <textarea name="notes" class="form-control mt-1" placeholder="Notes (optional)"></textarea>
+                            <button type="submit" class="btn btn-primary mt-2">Update</button>
+                        </form>
+                        {% else %}
+                        <span>Delivery Completed</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

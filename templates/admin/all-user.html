@@ -1,0 +1,53 @@
+{% extends "admin/layout.html"%}
+
+{% block content %}
+<div class="container">
+    {% include 'admin/navbar.html' %}
+    <div class="my-2">
+        <form action="" method="POST" style="width:100%">
+            <div class="d-flex align-items-center">
+                <input type="text" name="search" id="search" class="form-control my-1 w-50">
+                <button type="submit" class="btn btn-success " style="margin-left:10px;">Search</button>
+            </div>
+        </form>
+    </div>
+    <div class="my-2">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{user.id}}</td>
+                        <td>{{user.fname}}</td>
+                        <td>{{user.lname}}</td>
+                        <td>{{user.username}}</td>
+                        <td>{{user.email}}</td>
+  
+                        <td>
+                            {% if user.status == 1 %}
+                            Approved
+                            {% else %}
+                            <a href="/admin/approve-user/{{user.id}}">
+                                <button class="btn btn-warning">Approve</button>
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

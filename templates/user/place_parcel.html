@@ -1,0 +1,67 @@
+{% extends "user/layout.html" %}
+
+{% block title %}Place a Parcel{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <!-- Flash messages container -->
+            <div class="flash-messages">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h4>Place a New Parcel</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Form for placing a parcel -->
+                    <form method="POST" action="{{ url_for('place_parcel') }}">
+                        <!-- Parcel Description -->
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Parcel Description (optional)</label>
+                            <textarea class="form-control" id="description" name="description" rows="2"></textarea>
+                        </div>
+
+                        <!-- Delivery Type -->
+                        <div class="mb-3">
+                            <label for="deliveryType" class="form-label">Delivery Type</label>
+                            <select class="form-select" id="deliveryType" name="deliveryType" required>
+                                <option value="normal">Normal Delivery</option>
+                                <option value="fast">Fast Delivery</option>
+                            </select>
+                        </div>
+
+                        <!-- Sender Address -->
+                        <div class="mb-3">
+                            <label for="senderAddress" class="form-label">Sender Address</label>
+                            <input type="text" class="form-control" id="senderAddress" name="senderAddress" required>
+                        </div>
+
+                        <!-- Receiver Address -->
+                        <div class="mb-3">
+                            <label for="receiverAddress" class="form-label">Receiver Address</label>
+                            <input type="text" class="form-control" id="receiverAddress" name="receiverAddress" required>
+                        </div>
+
+                        <!-- Weight -->
+                        <div class="mb-3">
+                            <label for="weight" class="form-label">Weight (kg)</label>
+                            <input type="number" class="form-control" id="weight" name="weight" step="0.01" min="0.01" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

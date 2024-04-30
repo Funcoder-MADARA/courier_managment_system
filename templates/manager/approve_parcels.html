@@ -1,0 +1,43 @@
+{% extends "manager/layout.html" %}
+
+{% block title %}
+Approve Parcels
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Approve Parcels</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Sender Address</th>
+                <th>Receiver Address</th>
+                <th>Weight</th>
+                <th>Delivery Type</th>
+                <th>Total Due</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for parcel in parcels %}
+            <tr>
+                <td>{{ parcel.description }}</td>
+                <td>{{ parcel.sender_address }}</td>
+                <td>{{ parcel.receiver_address }}</td>
+                <td>{{ parcel.weight }} kg</td>
+                <td>{{ parcel.delivery_type }}</td>
+                <td>{{ parcel.total_due }}</td>
+                <td>
+                    <a href="{{ url_for('approve_parcel', parcel_id=parcel.id) }}" class="btn btn-success">Approve</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6">No parcels to approve.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

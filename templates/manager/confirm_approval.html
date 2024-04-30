@@ -1,0 +1,18 @@
+{% extends "manager/layout.html" %}
+
+{% block title %}
+Confirm approval
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1>Confirm Approval</h1>
+  <p>Are you sure you want to approve this parcel?</p>
+  
+  <form action="{{ url_for('approve_parcel', parcel_id=parcel.id) }}" method="post">
+      <button type="submit" class="btn btn-success">Approve</button>
+      <a href="{{ url_for('manager_dashboard') }}" class="btn btn-danger">Cancel</a>
+  </form>
+</div>
+{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
